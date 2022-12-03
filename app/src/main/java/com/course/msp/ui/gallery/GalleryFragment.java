@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -24,8 +25,7 @@ public class GalleryFragment extends Fragment {
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textGallery;
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
         return root;
     }
 

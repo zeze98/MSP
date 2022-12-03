@@ -14,12 +14,12 @@
     <fragment
         android:id="@+id/nav_gallery"
         android:name="com.course.msp.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
+        android:label="@string/menu_list"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.course.msp.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
+        android:label="@string/menu_calender"
         tools:layout="@layout/fragment_slideshow" />
 </navigation>
