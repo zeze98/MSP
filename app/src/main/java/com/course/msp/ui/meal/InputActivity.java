@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -40,7 +41,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class InputActivity extends AppCompatActivity implements View.OnClickListener {
-
+    
+    private TextView textView_date;
     private ActivityMainBinding binding;
     private AppBarConfiguration mAppBarConfiguration;
     private Button btnCamera;
@@ -68,7 +70,7 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        this.InitializeViewDate();
         this.InitializeListenerDate();
         this.InitializeListenerTime();
 
@@ -95,13 +97,17 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
         btnCamera.setOnClickListener(this);
     }
 
+    private void InitializeViewDate() {
+        textView_date = (TextView) findViewById(R.id.textView_date);
+    }
+
     public void InitializeListenerDate() {
-        callbackMethodDate = new DatePickerDialog.OnDateSetListener() {
+        callbackMethodDate = new DatePickerDialog.OnDateSetListener()
+        {
             @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                monthOfYear = changeMonthOfYear(monthOfYear);
-                String newDate = year + "년" + (monthOfYear) + "월" + dayOfMonth + "일";
-                setDate(newDate);
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+            {
+                textView_date.setText(year + "년" + monthOfYear + "월" + dayOfMonth + "일");
                 Log.d("info", "---> " + date);
             }
         };
