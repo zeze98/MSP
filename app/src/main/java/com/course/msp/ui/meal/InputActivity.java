@@ -55,9 +55,6 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
     private String date, time;
     private String resultTime;
 
-    private void setDate(String date){
-        this.date = date;
-    }
 
     private void setTime(String time){
         this.time = time;
@@ -97,7 +94,7 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
         btnCamera.setOnClickListener(this);
     }
 
-    private void InitializeViewDate() {
+    public void InitializeViewDate() {
         textView_date = (TextView) findViewById(R.id.textView_date);
     }
 
@@ -113,12 +110,8 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
         };
     }
 
-    private int changeMonthOfYear(int month){
-        return month+1;
-    }
-
     public void OnClickHandler(View view) {
-        DatePickerDialog dialog = new DatePickerDialog(this, callbackMethodDate, 2022, 12, 1);
+        DatePickerDialog dialog = new DatePickerDialog(this, callbackMethodDate, 2022, 12, 5);
         Log.d("Info", "자, 열리기 시작합니다");
         dialog.show();
     }
