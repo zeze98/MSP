@@ -10,4 +10,14 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="inputFoodName">음식 이름</string>
+    <string name="inputFoodCount">음식 수량</string>
+    <string name="inputFoodFeel">음식 소감</string>
+    <string name="inputFoodTime">식사 시간</string>
+    <string name="inputFoodInformation">식사 입력하기</string>
+    <string name="save_meal">정보 저장</string>
+    <string name="take_photo">사진 촬영</string>
+    <string name="open_gallery">갤러리 열기</string>
+    <string name="open_time">시간 정보 입력</string>
+    <string name="open_date">날짜 정보 입력</string>
 </resources>
