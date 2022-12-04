@@ -14,7 +14,7 @@
             android:title="@string/menu_list" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_calender"
+            android:icon="@drawable/ic_menu_calendar"
             android:title="@string/menu_calender" />
     </group>
 </menu>
