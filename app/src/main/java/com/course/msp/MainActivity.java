@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), InputActivity.class);
                 startActivity(intent);
-                Snackbar.make(view, "씨발 왜 안되는거야", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "시작합니다", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
                 Log.d("Info", "넘어갑니다.");
