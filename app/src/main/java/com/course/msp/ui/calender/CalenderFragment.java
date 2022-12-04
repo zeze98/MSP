@@ -1,4 +1,4 @@
-package com.course.msp.ui.slideshow;
+package com.course.msp.ui.calender;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,20 +12,20 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.course.msp.databinding.FragmentSlideshowBinding;
 
-public class SlideshowFragment extends Fragment {
+public class CalenderFragment extends Fragment {
 
     private FragmentSlideshowBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SlideshowViewModel slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+        CalenderViewModel calenderViewModel =
+                new ViewModelProvider(this).get(CalenderViewModel.class);
 
         binding = FragmentSlideshowBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textSlideshow;
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        calenderViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
