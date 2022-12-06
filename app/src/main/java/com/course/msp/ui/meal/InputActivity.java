@@ -20,7 +20,11 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+
 import android.widget.Spinner;
+
+import android.widget.TextView;
+
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -52,6 +56,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+
 public class InputActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private Button btnCamera, positionButton;
@@ -71,9 +76,6 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
 
 
 
-    private void setDate(String date){
-        this.date = date;
-    }
 
     private void setTime(String time){
         this.time = time;
@@ -87,6 +89,7 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.input_meal);
+
 
         this.InitializeListenerDate();
         this.InitializeListenerTime();
@@ -142,24 +145,24 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
         return super.onOptionsItemSelected(item);
     }
 
+    public void InitializeViewDate() {
+        textView_date = (TextView) findViewById(R.id.textView_date);
+    }
+
     public void InitializeListenerDate() {
-        callbackMethodDate = new DatePickerDialog.OnDateSetListener() {
+        callbackMethodDate = new DatePickerDialog.OnDateSetListener()
+        {
             @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                monthOfYear = changeMonthOfYear(monthOfYear);
-                String newDate = year + "년" + (monthOfYear) + "월" + dayOfMonth + "일";
-                setDate(newDate);
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+            {
+                textView_date.setText(year + "년" + monthOfYear + "월" + dayOfMonth + "일");
                 Log.d("info", "---> " + date);
             }
         };
     }
 
-    private int changeMonthOfYear(int month){
-        return month+1;
-    }
-
     public void OnClickHandler(View view) {
-        DatePickerDialog dialog = new DatePickerDialog(this, callbackMethodDate, 2022, 12, 1);
+        DatePickerDialog dialog = new DatePickerDialog(this, callbackMethodDate, 2022, 12, 5);
         Log.d("Info", "자, 열리기 시작합니다");
         dialog.show();
     }
