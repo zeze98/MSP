@@ -4,16 +4,15 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.course.msp.R;
+import com.course.msp.controller.Foods;
+
+import java.util.ArrayList;
+
 public class GalleryViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
 
     public GalleryViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
     }
 
-    public LiveData<String> getText() {
-        return mText;
-    }
 }

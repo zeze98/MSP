@@ -4,23 +4,29 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.media.Image;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -31,27 +37,39 @@ import androidx.navigation.ui.NavigationUI;
 import com.course.msp.MainActivity;
 import com.course.msp.R;
 import com.course.msp.contents.MyContentProvider;
+import com.course.msp.controller.MapActicity;
 import com.course.msp.databinding.ActivityMainBinding;
+import com.course.msp.domain.dto.FoodDto;
+import com.course.msp.domain.dto.FoodInfor;
+import com.course.msp.repository.FoodInformationRepository;
+import com.course.msp.repository.FoodRepository;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
-public class InputActivity extends AppCompatActivity implements View.OnClickListener {
+public class InputActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    private ActivityMainBinding binding;
-    private AppBarConfiguration mAppBarConfiguration;
-    private Button btnCamera;
+    private Button btnCamera, positionButton;
     private ImageView imageView;
     private Uri photoUri;
-    static final int REQUEST_CODE = 1;
     private static final String RESOURCE = "com.course.msp.contents.MyContentProvider";
     private DatePickerDialog.OnDateSetListener callbackMethodDate;
     private TimePickerDialog.OnTimeSetListener callbackMethodTime;
     private String date, time;
     private String resultTime;
+    private Spinner spinner;
+    private static final String[] mealTime = {"선택하세요", "아침", "점심", "저녁"};
+
+    public ArrayList<FoodDto> getFoodDto(){
+        return FoodRepository.getFoods();
+    }
+
+
 
     private void setDate(String date){
         this.date = date;
@@ -68,31 +86,60 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.input_meal);
 
         this.InitializeListenerDate();
         this.InitializeListenerTime();
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        setSupportActionBar(binding.appBarMain.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
-                .setOpenableLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
 
-        setContentView(R.layout.input_meal);
+        spinner = (Spinner) this.findViewById(R.id.spinner1);
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mealTime);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                time = mealTime[i];
+                resultTime = "[" + time + "] " + date;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
 
         btnCamera = (Button) findViewById(R.id.btn_UploadImage);
         imageView = (ImageView) findViewById(R.id.foodImageView);
         btnCamera.setOnClickListener(this);
+
+        Button posButton = (Button) findViewById(R.id.positionButton);
+        posButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MapActicity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void InitializeListenerDate() {
@@ -137,11 +184,16 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view)    {
+
         switch (view.getId()) {
             // 카메라촬영 클릭 이벤트
             case R.id.btn_UploadImage:
+
+                Log.d("info", "On button");
+
                 // 카메라 기능을 Intent
                 Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                Log.d("Info", "Camera On!");
                 // 사진파일 변수 선언 및 경로세팅
                 File photoFile = null;
                 try { photoFile = createImageFile(); } catch (IOException ex) { }
@@ -176,6 +228,18 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
         Log.d("DEATIL", resultTime);
 
 
+        FoodDto foodDto = new FoodDto(photoUri, resultTime);
+        FoodInfor foodInfor = new FoodInfor();
+
+        foodInfor.setFoodName(((EditText) findViewById(R.id.inputFoodName)).getText().toString());
+        foodInfor.setFoodCount(((EditText) findViewById(R.id.inputFoodCount)).getText().toString());
+        foodInfor.setFoodFeel(((EditText) findViewById(R.id.inputFoodFeel)).getText().toString());
+        foodInfor.setTime(resultTime);
+        foodInfor.setImage(photoUri);
+
+        FoodInformationRepository.addFoodInfor(foodInfor);
+        FoodRepository.addFood(foodDto);
+
         getContentResolver().insert(MyContentProvider.CONTENT_URI, addValues);
         Toast.makeText(getBaseContext(), "Record Added", Toast.LENGTH_LONG).show();
 
@@ -184,23 +248,54 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void openGallery(View view){
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-        startActivityForResult(intent, REQUEST_CODE);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, 1);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)    {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
         super.onActivityResult(requestCode, resultCode, data);
-
-        // 카메라 촬영을 하면 이미지뷰에 사진 삽입
-        if(requestCode == 0 && resultCode == RESULT_OK) {
-            // 이미지뷰에 파일경로의 사진을 가져와 출력
-            imageView.setImageURI(photoUri);
-        } else if (requestCode == REQUEST_CODE) {
-            photoUri = data.getData();
+        if (requestCode == 1) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                try {
+                    photoUri = data.getData();
+                    // 선택한 이미지에서 비트맵 생성
+                    InputStream in = getContentResolver().openInputStream(data.getData());
+                    Bitmap img = BitmapFactory.decodeStream(in);
+                    in.close();
+                    // 이미지 표시
+                    imageView.setImageBitmap(img);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } else if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                try {
+                    imageView.setImageURI(photoUri);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data)    {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        // 카메라 촬영을 하면 이미지뷰에 사진 삽입
+//        if(requestCode == 0 && resultCode == RESULT_OK) {
+//            // 이미지뷰에 파일경로의 사진을 가져와 출력
+//            imageView.setImageURI(photoUri);
+//        } else if (requestCode == REQUEST_CODE) {
+//            photoUri = data.getData();
+//        }
+//    }
 
 
     // ImageFile의 경로를 가져올 메서드 선언
@@ -217,17 +312,13 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
         return image;
     }
 
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

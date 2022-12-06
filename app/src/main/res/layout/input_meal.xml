@@ -5,14 +5,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="31dp"
+        android:theme="@style/Theme.MSP.AppBarOverlay"
+        app:layout_constraintBottom_toTopOf="@+id/foodImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/black"
+            app:popupTheme="@style/Theme.MSP.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="94dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/chooseTime"
+        android:minHeight="48dp"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        tools:ignore="MissingConstraints"></Spinner>
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="306dp"
         android:text="@string/inputFoodInformation"
-        app:layout_constraintBottom_toTopOf="@+id/foodImageView"
+        app:layout_constraintBottom_toTopOf="@+id/inputFoodCount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,18 +59,16 @@
         android:id="@+id/foodImageView"
         android:layout_width="201dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_UploadImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         app:srcCompat="@drawable/ic_menu_camera" />
 
     <Button
         android:id="@+id/btn_UploadImage"
         android:layout_width="203dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="3dp"
         android:text="@string/take_photo"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,10 +81,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="27dp"
         android:layout_marginEnd="27dp"
+        android:layout_marginBottom="49dp"
         android:text="@string/inputFoodName"
-        app:layout_constraintBaseline_toBaselineOf="@+id/inputFoodName"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintEnd_toStartOf="@+id/inputFoodName"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button3" />
 
     <TextView
         android:id="@+id/textView4"
@@ -56,50 +94,52 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="27dp"
         android:layout_marginEnd="27dp"
+        android:layout_marginBottom="57dp"
         android:text="@string/inputFoodCount"
-        app:layout_constraintBaseline_toBaselineOf="@+id/inputFoodCount"
+        app:layout_constraintBottom_toTopOf="@+id/textView5"
         app:layout_constraintEnd_toStartOf="@+id/inputFoodCount"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="27dp"
-        android:layout_marginTop="15dp"
         android:layout_marginEnd="27dp"
+        android:layout_marginBottom="57dp"
         android:text="@string/inputFoodFeel"
+        app:layout_constraintBottom_toTopOf="@+id/spinner1"
         app:layout_constraintEnd_toStartOf="@+id/inputFoodFeel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/inputFoodFeel" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="75dp"
-        android:layout_marginBottom="38dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="75dp"
         android:onClick="OnClickHandler"
         android:text="@string/open_date"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
-        app:layout_constraintEnd_toStartOf="@+id/button5"
+        app:layout_constraintBottom_toBottomOf="@+id/positionButton"
+        app:layout_constraintEnd_toStartOf="@+id/spinner1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputFoodFeel" />
+        app:layout_constraintTop_toTopOf="@+id/textView5" />
 
     <EditText
         android:id="@+id/inputFoodName"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="51dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="15dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
-        app:layout_constraintBottom_toTopOf="@+id/inputFoodCount"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/button3"
         tools:ignore="DuplicateSpeakableTextCheck" />
 
     <EditText
@@ -107,67 +147,66 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="6dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="265dp"
         android:autofillHints=""
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
-        app:layout_constraintBottom_toTopOf="@+id/inputFoodFeel"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/inputFoodName" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
         android:id="@+id/inputFoodFeel"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="96dp"
         android:layout_marginEnd="6dp"
-        android:layout_marginBottom="22dp"
+        android:layout_marginBottom="93dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toBottomOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/inputFoodCount" />
+        app:layout_constraintTop_toBottomOf="@+id/inputFoodName" />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="58dp"
+        android:layout_height="54dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="16dp"
         android:onClick="addFoodInformation"
         android:text="@string/save_meal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/button5"
-        app:layout_constraintStart_toStartOf="@+id/button5"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/positionButton" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="202dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="21dp"
+        android:layout_marginBottom="48dp"
         android:onClick="openGallery"
         android:text="@string/open_gallery"
-        app:layout_constraintBottom_toTopOf="@+id/inputFoodName"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_UploadImage" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/positionButton"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="22dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="36dp"
-        android:text="@string/open_time"
-        android:onClick="OnClickTimeHandlerTime"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/inputFoodFeel" />
+        android:layout_height="53dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/googlemap"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button4"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,27 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+
+    <permission android:name="com.example.my38_locationmap.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature"/>
+
+    <!--권한 부여 설정-->
+    <uses-permission android:name="com.example.my38_locationmap.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="READ_GSERVICES"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <uses-feature android:glEsVersion="0x00020000"
+        android:required="true"/>
+
+
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+
     <queries>
         <provider android:authorities="kr.co.softcampus.dbprovider"/>
     </queries>
@@ -17,6 +38,14 @@
         android:theme="@style/Theme.MSP.NoActionBar"
         tools:targetApi="31">
 
+        <uses-library android:name="com.google.android.maps"/>
+        <uses-library android:name="org.apache.http.legacy"
+            android:required="false"/>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCbORbVtQIrQkYOvjQMmVn4paH0PEeAGc0" />
+
         <provider
             android:name="com.course.msp.contents.MyContentProvider"
             android:authorities="com.course.msp.contents.MyContentProvider"
@@ -25,6 +54,10 @@
             <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <activity android:name=".controller.DBActivity"
+            android:exported="true">
+        </activity>
 
         <activity
             android:name=".ui.meal.InputActivity"
@@ -55,11 +88,43 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <activity android:name=".controller.MapActicity"
+            android:exported="true"
+            android:label="@string/app_name">
+
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+
+        <activity android:name=".controller.InforActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.MSP.NoActionBar">
+
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
     </application>
 
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+
+
 
 </manifest>
