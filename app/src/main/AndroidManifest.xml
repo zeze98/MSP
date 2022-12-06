@@ -88,6 +88,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+<<<<<<< HEAD
 
         <activity android:name=".controller.MapActicity"
             android:exported="true"
@@ -117,6 +118,11 @@
                 android:value="" />
         </activity>
 
+=======
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+>>>>>>> 29f17ed5b438647a9c9c08c9eae1225de320dbc1
     </application>
 
     <uses-permission
