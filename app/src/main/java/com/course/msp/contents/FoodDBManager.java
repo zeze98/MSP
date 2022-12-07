@@ -18,6 +18,7 @@ public class FoodDBManager extends SQLiteOpenHelper {
             + "  image TEXT NOT NULL, name TEXT NOT NULL, count TEXT NOT NULL, feel TEXT NOT NULL, time TEXT NOT NULL);";
 
     public static final String DROP_DB = " DROP TABLE " + FOOD_TABLE;
+    public static final String INQUIRE_DB = " SELECT image, time FROM " + FOOD_TABLE;
 
     public static FoodDBManager getInstance(Context context){
         if(dbManager == null){
@@ -63,5 +64,4 @@ public class FoodDBManager extends SQLiteOpenHelper {
     public int delete(String whereClause, String[] whereArgs){
         return getWritableDatabase().delete(FOOD_TABLE, whereClause, whereArgs);
     }
-
 }
