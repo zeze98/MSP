@@ -42,7 +42,7 @@ import java.util.Date;
 
 public class InputActivity extends AppCompatActivity implements View.OnClickListener {
     
-    private TextView textView_date;
+    private TextView textView_Date;
     private ActivityMainBinding binding;
     private AppBarConfiguration mAppBarConfiguration;
     private Button btnCamera;
@@ -95,7 +95,7 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void InitializeViewDate() {
-        textView_date = (TextView) findViewById(R.id.textView_date);
+        textView_Date = (TextView) findViewById(R.id.textView_date);
     }
 
     public void InitializeListenerDate() {
@@ -104,7 +104,7 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
             {
-                textView_date.setText(year + "년" + monthOfYear + "월" + dayOfMonth + "일");
+                textView_Date.setText(year + "년" + monthOfYear + "월" + dayOfMonth + "일");
                 Log.d("info", "---> " + date);
             }
         };
